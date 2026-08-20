@@ -22,6 +22,14 @@ const Store = (() => {
   try { s = Object.assign(base(), JSON.parse(localStorage.getItem(KEY) || '{}')); }
   catch (e) { s = base(); }
 
+  // Migración: descarta progreso de lecciones o ejercicios que ya no existen
+  try {
+    const okLesson = new Set(CONTENT.allLessons.map(l => l.id));
+    Object.keys(s.lessons).forEach(id => { if (!okLesson.has(id)) delete s.lessons[id]; });
+    const okEx = new Set(CONTENT.allExercises.map(e => e.id));
+    Object.keys(s.seen).forEach(id => { if (!okEx.has(id)) delete s.seen[id]; });
+  } catch (e) {}
+
   const save = () => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch (e) {} };
 
   /* ---- vidas ---- */

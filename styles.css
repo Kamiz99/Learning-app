@@ -273,3 +273,18 @@ p{margin:0}
 .calendar div.on{background:var(--orange); border-color:var(--orange); color:#fff}
 .flash{animation:flash .4s}
 @keyframes flash{from{transform:scale(.9); opacity:.4}}
+
+/* ---- barra para saltar de unidad ---- */
+.unit-jump{
+  display:flex; gap:8px; overflow-x:auto; padding:4px 2px 12px; margin-bottom:6px;
+  scrollbar-width:thin;
+}
+.unit-jump button{
+  flex:none; display:flex; align-items:center; gap:5px; padding:8px 12px; border-radius:12px;
+  background:var(--card); border:2px solid var(--line); border-bottom-width:4px;
+  font-size:13px; color:var(--text-soft); white-space:nowrap;
+}
+.unit-jump button b{color:var(--text)}
+.unit-jump button:hover{border-color:var(--c); color:var(--c)}
+.unit-jump button.full{background:var(--c); border-color:var(--c); color:#fff}
+.unit-jump button.full b{color:#fff}

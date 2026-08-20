@@ -73,6 +73,15 @@ const Home = (() => {
         <button class="btn info sm" data-act="continue">Continuar ▶</button>
       </div>
 
+      <div class="unit-jump">
+        ${CONTENT.units.map(u => {
+          const d = u.lessons.filter(l => Store.isDone(l.id)).length;
+          const full = d === u.lessons.length;
+          return `<button data-act="jump" data-id="${u.id}" class="${full ? 'full' : ''}"
+            style="--c:${u.color}" title="${UI.esc(u.title)}">${u.icon} <b>${u.num}</b></button>`;
+        }).join('')}
+      </div>
+
       ${CONTENT.units.map(u => {
         const lessons = u.lessons.map(l => {
           gi++;
@@ -89,7 +98,7 @@ const Home = (() => {
             </div>`;
         }).join('');
         const uDone = u.lessons.filter(l => Store.isDone(l.id)).length;
-        return `<section class="unit">
+        return `<section class="unit" id="sec-${u.id}">
           <div class="unit-head" style="background:${u.color}">
             <div>
               <div class="k">${u.domain} · ${u.weight} % del examen</div>
@@ -117,6 +126,10 @@ const Home = (() => {
       continue: () => {
         const nextL = CONTENT.allLessons.find(l => !Store.isDone(l.id)) || CONTENT.allLessons[0];
         openLesson(nextL.id);
+      },
+      jump: el => {
+        const sec = document.getElementById('sec-' + el.dataset.id);
+        if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
     });
   }

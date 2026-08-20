@@ -3,7 +3,9 @@
 Aplicación web tipo Duolingo para preparar el examen **AWS Certified Cloud Practitioner (CLF-C02)**:
 lecciones cortas, rachas, vidas, XP, logros y simulacros de examen cronometrados.
 
-Todo el contenido está en español y no requiere instalación, servidor ni conexión a internet.
+El camino de aprendizaje sigue **el orden de las secciones del curso en vídeo** (slides v44), de modo
+que puedes practicar cada sección justo después de verla. Todo el contenido está en español y no
+requiere instalación, servidor ni conexión a internet.
 
 ## 🚀 Cómo ejecutarla
 
@@ -25,7 +27,8 @@ También puede publicarse tal cual en GitHub Pages, Netlify o cualquier hosting 
 
 | Mecánica | Descripción |
 |---|---|
-| **Camino de aprendizaje** | 6 unidades y 31 lecciones que se desbloquean en orden, con burbujas y estrellas |
+| **Camino de aprendizaje** | 20 unidades y 59 lecciones que se desbloquean en orden, con burbujas y estrellas |
+| **Barra de unidades** | Chips en la parte superior para saltar directamente a la sección que estás estudiando |
 | **Vidas ❤️** | 5 vidas; se pierde una por fallo y se recupera una cada 15 minutos (o con gemas) |
 | **Racha 🔥** | Cuenta los días consecutivos de práctica y se rompe si te saltas un día |
 | **XP y niveles ⭐** | 15 XP por lección (+5 si es perfecta) y meta diaria configurable |
@@ -47,18 +50,36 @@ Cada respuesta muestra una explicación con el porqué, tanto si aciertas como s
 
 ## 📚 Temario cubierto
 
-Sigue la guía oficial del examen CLF-C02 y respeta el peso de cada dominio:
+Las 20 unidades siguen el orden del curso, y cada una indica a qué dominio del examen pertenece:
 
-| Unidad | Dominio | Peso |
+| # | Unidad | Dominio principal |
 |---|---|---|
-| 1. Conceptos de la nube | Dominio 1 | 24 % |
-| 2. Arquitectura bien diseñada | Dominio 1 | 24 % |
-| 3. Seguridad y cumplimiento | Dominio 2 | 30 % |
-| 4. Infraestructura global y cómputo | Dominio 3 | 34 % |
-| 5. Almacenamiento, datos y redes | Dominio 3 | 34 % |
-| 6. Facturación, precios y soporte | Dominio 4 | 12 % |
+| 1 | La nube y AWS | 1 · Conceptos de la nube |
+| 2 | IAM: identidad y accesos | 2 · Seguridad |
+| 3 | Amazon EC2 | 3 · Tecnología |
+| 4 | Almacenamiento de EC2 (EBS, EFS, FSx) | 3 · Tecnología |
+| 5 | ELB y Auto Scaling | 3 · Tecnología |
+| 6 | Amazon S3 y migración de datos | 3 · Tecnología |
+| 7 | Bases de datos y analítica | 3 · Tecnología |
+| 8 | Contenedores y serverless | 3 · Tecnología |
+| 9 | Despliegue y automatización | 3 · Tecnología |
+| 10 | Arquitectura global | 3 · Tecnología |
+| 11 | Integración y mensajería | 3 · Tecnología |
+| 12 | Monitorización y auditoría | 2 · Seguridad |
+| 13 | VPC y redes | 3 · Tecnología |
+| 14 | Seguridad y cumplimiento | 2 · Seguridad |
+| 15 | Machine Learning e IA | 3 · Tecnología |
+| 16 | Cuentas, facturación y soporte | 4 · Facturación |
+| 17 | Identidad avanzada | 2 · Seguridad |
+| 18 | Otros servicios de AWS | 3 · Tecnología |
+| 19 | Arquitectura y ecosistema | 1 · Conceptos de la nube |
+| 20 | Preparación del examen | Repaso |
 
-En total: **194 ejercicios** en las lecciones y **82 preguntas** en el banco del simulacro.
+En total: **357 ejercicios** en las lecciones y **141 preguntas** en el banco del simulacro.
+
+El simulacro reparte las preguntas según el peso real de cada dominio del CLF-C02:
+Conceptos de la nube 24 %, Seguridad y cumplimiento 30 %, Tecnología y servicios 34 %,
+Facturación y soporte 12 %.
 
 ## 🗂️ Estructura del proyecto
 
@@ -79,12 +100,13 @@ js/
 
 ### Añadir contenido
 
-Para crear una lección nueva basta con añadir un objeto al array `lessons` de una unidad en
-`js/content.js`; los identificadores de ejercicio se generan solos al final del archivo:
+Cada unidad se declara con el helper `U(meta, lessons)`. Para crear una lección nueva basta con
+añadir un objeto al array de lecciones de una unidad en `js/content.js`; los identificadores de
+ejercicio se generan solos al final del archivo:
 
 ```js
 {
-  id: 'u1l6', icon: '🎯', title: 'Mi lección',
+  id: 'u01l7', icon: '🎯', title: 'Mi lección',
   tip: 'Idea clave que se muestra antes de empezar.',
   ex: [
     { t:'choice', q:'¿Pregunta?', o:['A','B','C','D'], a:0, why:'Explicación.' },
@@ -100,6 +122,7 @@ Las opciones se barajan automáticamente en cada intento.
 
 Todo el progreso se guarda **solo en tu navegador** (`localStorage`, clave `cloudlingo.v1`).
 No hay cuentas, ni servidor, ni analítica. Puedes borrarlo desde *Perfil → Borrar todo mi progreso*.
+Si el temario cambia, el progreso de lecciones que ya no existen se descarta automáticamente al cargar.
 
 ## ⚙️ Ajustes disponibles
 
